@@ -19,7 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Application", "Notes.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{94AC7EE8-1DD0-40C4-AD0E-5B8C09B2B11B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Tests", "Notes.Tests\Notes.Tests.csproj", "{20341464-32FB-4058-95CD-394C3C2C91BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Notes.Tests", "Notes.Tests\Notes.Tests.csproj", "{20341464-32FB-4058-95CD-394C3C2C91BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{F71BF5E9-DFE5-415E-812E-E05002A71D89}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

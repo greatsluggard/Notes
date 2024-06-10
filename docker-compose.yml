@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 9191
+      POSTGRES_DB: notes
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Notes.API/Dockerfile
+    ports:
+      - "5237:80"
+    environment:
+      ConnectionStrings__PostgreSQL: "Server=db;Port=5432;Database=notes;User Id=postgres;Password=9191"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
