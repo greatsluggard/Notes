@@ -5,7 +5,6 @@ using Notes.Application.Mediators.Tag.Commands;
 using Notes.Application.Mediators.Tag.Queries;
 using Notes.Domain.DTO.Tag;
 using Notes.Domain.Result;
-using Reminders.Application.Mediators.Reminder.Queries;
 
 namespace Tags.API.Controllers
 {
@@ -37,7 +36,7 @@ namespace Tags.API.Controllers
         [HttpGet("get")]
         public async Task<ActionResult<BaseResult<TagDTO>>> GetTagById([FromQuery] long id)
         {
-            var response = await _mediator.Send(new GetReminderByIdQuery(id));
+            var response = await _mediator.Send(new GetTagByIdQuery(id));
 
             if (response.IsSuccess)
             {

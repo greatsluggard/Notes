@@ -1,0 +1,33 @@
+﻿CREATE TABLE "Note" (
+    "NoteId" BIGSERIAL PRIMARY KEY,
+    "Text" VARCHAR(2000) NOT NULL,
+    "Title" VARCHAR(250) NOT NULL
+);
+
+CREATE TABLE "Tag" (
+    "TagId" BIGSERIAL PRIMARY KEY,
+    "Name" VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE "NoteTag" (
+    "NoteId" BIGINT NOT NULL,
+    "TagId" BIGINT NOT NULL,
+    PRIMARY KEY ("NoteId", "TagId"),
+    FOREIGN KEY ("NoteId") REFERENCES "Note"("NoteId") ON DELETE CASCADE,
+    FOREIGN KEY ("TagId") REFERENCES "Tag"("TagId") ON DELETE CASCADE
+);
+
+CREATE TABLE "Reminder" (
+    "ReminderId" BIGSERIAL PRIMARY KEY,
+    "ReminderTime" TIMESTAMPTZ NOT NULL,
+    "Text" VARCHAR(2000) NOT NULL,
+    "Title" VARCHAR(250) NOT NULL
+);
+
+CREATE TABLE "ReminderTag" (
+    "ReminderId" BIGINT NOT NULL,
+    "TagId" BIGINT NOT NULL,
+    PRIMARY KEY ("ReminderId", "TagId"),
+    FOREIGN KEY ("ReminderId") REFERENCES "Reminder"("ReminderId") ON DELETE CASCADE,
+    FOREIGN KEY ("TagId") REFERENCES "Tag"("TagId") ON DELETE CASCADE
+);

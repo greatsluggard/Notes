@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Notes.Application.Resources;
+using Notes.Domain.DTO.Reminder;
 using Notes.Domain.DTO.Tag;
 using Notes.Domain.Entities;
 using Notes.Domain.Enum;
@@ -69,10 +70,20 @@ namespace Notes.Application.Services
             TagDTO? tagDTO;
             try
             {
-                tagDTO = await _tagRepository.GetAll()
+                var tag = await _tagRepository.GetAll()
                     .AsNoTracking()
-                    .Select(n => new TagDTO(n.TagId, n.Name))
                     .FirstOrDefaultAsync(n => n.TagId == id);
+
+                if (tag == null)
+                {
+                    return new BaseResult<TagDTO>
+                    {
+                        ErrorMessage = ErrorMessage.TagNotFound,
+                        ErrorCode = (int)ErrorCode.TagNotFound
+                    };
+                }
+
+                tagDTO = new TagDTO(tag.TagId, tag.Name);
             }
             catch
             {
@@ -80,15 +91,6 @@ namespace Notes.Application.Services
                 {
                     ErrorMessage = ErrorMessage.InternalServerError,
                     ErrorCode = (int)ErrorCode.InternalServerError
-                };
-            }
-
-            if (tagDTO == null)
-            {
-                return new BaseResult<TagDTO>
-                {
-                    ErrorMessage = ErrorMessage.TagNotFound,
-                    ErrorCode = (int)ErrorCode.TagNotFound
                 };
             }
 

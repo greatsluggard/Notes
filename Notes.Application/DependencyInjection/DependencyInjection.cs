@@ -4,6 +4,8 @@ using Notes.Application.Mapping;
 using Notes.Application.Mediators.Note.Commands;
 using Notes.Application.Mediators.Note.Queries;
 using Notes.Application.Mediators.Reminder.Queries;
+using Notes.Application.Mediators.Tag.Commands;
+using Notes.Application.Mediators.Tag.Queries;
 using Notes.Application.Services;
 using Notes.Application.Validations.Note;
 using Notes.Application.Validations.Reminder;
@@ -39,6 +41,12 @@ namespace Notes.Application.DependencyInjection
                 cfg.RegisterServicesFromAssembly(typeof(SetReminderTagCommand).Assembly);
                 cfg.RegisterServicesFromAssembly(typeof(GetRemindersQuery).Assembly);
                 cfg.RegisterServicesFromAssembly(typeof(GetReminderByIdQuery).Assembly);
+
+                cfg.RegisterServicesFromAssembly(typeof(CreateTagCommand).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(UpdateTagCommand).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(DeleteTagCommand).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(GetTagsQuery).Assembly);
+                cfg.RegisterServicesFromAssembly(typeof(GetTagByIdQuery).Assembly);
             });
 
             services.InitServices();

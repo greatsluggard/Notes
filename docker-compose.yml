@@ -1,27 +1,41 @@
-version: '3.4'
+version: '3.9'
 
 services:
   db:
-    image: postgres
+    image: postgres:latest
+    build:
+        context: ./db
+        dockerfile: Dockerfile.pgsql
+    container_name: db_container
     environment:
+      POSTGRES_DB: notes
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 9191
-      POSTGRES_DB: notes
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - notes_postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - notes_network
 
   api:
+    container_name: api_container
     build:
       context: .
-      dockerfile: Notes.API/Dockerfile
+      dockerfile: /Notes.API/Dockerfile
     ports:
-      - "5237:80"
+      - "5000:80"
     environment:
-      ConnectionStrings__PostgreSQL: "Server=db;Port=5432;Database=notes;User Id=postgres;Password=9191"
+        ConnectionStrings__PostgreSQL: "Server=db;Port=5432;Database=notes;User Id=postgres;Password=9191"
     depends_on:
       - db
+    networks:
+      - notes_network
+
+networks:
+  notes_network:
+    driver: bridge
 
 volumes:
-  postgres_data:
+  notes_postgres-data:
